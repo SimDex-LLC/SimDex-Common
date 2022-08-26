@@ -4,6 +4,31 @@ namespace SimDex\Common;
 
 class HTML
 {
+    public static function tableStyles(): string
+    {
+        $html = '
+        <style>
+            table, thead, tbody, tfoot, th, td {
+                border: 1px solid #ccc;
+                border-collapse: collapse;
+                padding: 10px;
+                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            }
+
+            th {
+                font-weight: bold;
+                background-color: #eee;
+            }
+
+            tr:hover {
+                background-color: #eee;
+            }
+        </style>
+        ';
+
+        return $html;
+    }
+    
     public static function tableHeader(array $headers, ?string $table_classes = '', ?string $thead_classes = ''): string
     {
         $html = '
