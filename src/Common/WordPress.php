@@ -1,83 +1,13 @@
 <?php
 
-namespace SimDex;
+namespace SimDex\Common;
 
-class Common
+class WordPress
 {
-    public static function startTimer()
-    {
-        return hrtime(true);
-    }
-
-    public static function stopTimer($start_time)
-    {
-        $stop_time = hrtime(true);
-        $duration  = ($stop_time - $start_time);
-        $seconds   = ($duration / 1000000000);
-
-        return $seconds;
-    }
-
-    public static function tableHeaderHTML(array $headers, ?string $table_classes = '', ?string $thead_classes = ''): string
-    {
-        $html = '
-        <table class="' . $table_classes . '">
-            <thead class="' . $thead_classes . '">
-                <tr>
-        ';
-
-        foreach ($headers as $class => $header) {
-            $html .= '<th class="' . $class . '">' . $header . '</th>';
-        }
-
-        $html .= '
-                </tr>
-            </thead>
-            <tbody>
-        ';
-
-        return $html;
-    }
-
-    public static function tableRowHTML(array $values): string
-    {
-
-        $html = '<tr>';
-
-        foreach ($values as $class => $value) {
-            $html .= '<td class="' . $class . '" data-value="' . htmlspecialchars($value) . '">' . $value . '</td>';
-        }
-
-        $html .= '</tr>';
-
-        return $html;
-    }
-
-    public static function tableFooterHTML(array $headers, ?string $tfoot_classes = ''): string
-    {
-        $html = '
-        </tbody>
-        <tfoot class="' . $tfoot_classes . '">
-            <tr>
-        ';
-
-        foreach ($headers as $class => $header) {
-            $html .= '<th class="' . $class . '">' . $header . '</th>';
-        }
-
-        $html .= '
-                </tr>
-            </tfoot>
-        </table>
-        ';
-
-        return $html;
-    }
-
-    public static function wpDebug()
+    public static function debug()
     {
         if (isset($_REQUEST['debug']) && $_REQUEST['debug']) {
-            $start_time = self::startTimer();
+            $start_time = Common::startTimer();
 
             if (!current_user_can('administrator')) {
                 return;
@@ -277,7 +207,7 @@ class Common
                 $html .= '<div class="php-info">' . $php_info . '</div>';
             }
 
-            $seconds = self::stopTimer($start_time);
+            $seconds = Common::stopTimer($start_time);
 
             $html .= '
                 <p>Debug Execution Time: <strong>' . $seconds . ' seconds</strong></p>
