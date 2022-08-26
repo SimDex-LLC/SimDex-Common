@@ -28,7 +28,7 @@ class HTML
 
         return $html;
     }
-    
+
     public static function tableHeader(array $headers, ?string $table_classes = '', ?string $thead_classes = ''): string
     {
         $html = '
@@ -102,6 +102,23 @@ class HTML
             $html .= '</ul>';
         } elseif ($list_type == 'ol') {
             $html .= '</ol>';
+        }
+
+        return $html;
+    }
+
+    public static function formSelectOptions(array $options, ?string $default = '', ?string $selected = ''): string
+    {
+        $html = '';
+
+        foreach ($options as $value => $label) {
+            if ($selected && $selected == $value) {
+                $html .= '<option class="option-selected" value="' . htmlspecialchars($value) . '" selected>' . $label . '</option>';
+            } elseif (!$selected && $default == $value) {
+                $html .= '<option class="option-selected option-default" value="' . htmlspecialchars($value) . '" selected>' . $label . '</option>';
+            } else {
+                $html .= '<option value="' . htmlspecialchars($value) . '">' . $label . '</option>';
+            }
         }
 
         return $html;
