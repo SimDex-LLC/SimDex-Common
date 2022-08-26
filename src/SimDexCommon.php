@@ -4,6 +4,20 @@ namespace SimDex;
 
 class SimDexCommon
 {
+    public static function startTimer()
+    {
+        return hrtime(true);
+    }
+
+    public static function stopTimer($start_time)
+    {
+        $stop_time = hrtime(true);
+        $duration  = ($stop_time - $start_time);
+        $seconds   = ($duration / 1000000000);
+
+        return $seconds;
+    }
+
     public static function tableHeaderHTML(array $header_columns): string
     {
         $html = '
