@@ -7,7 +7,7 @@ class WordPress
     public static function debug()
     {
         if (isset($_REQUEST['debug']) && $_REQUEST['debug']) {
-            $start_time = Common::startTimer();
+            $start_time = General::startTimer();
 
             if (!current_user_can('administrator')) {
                 return;
@@ -207,7 +207,7 @@ class WordPress
                 $html .= '<div class="php-info">' . $php_info . '</div>';
             }
 
-            $seconds = Common::stopTimer($start_time);
+            $seconds = General::stopTimer($start_time);
 
             $html .= '
                 <p>Debug Execution Time: <strong>' . $seconds . ' seconds</strong></p>
