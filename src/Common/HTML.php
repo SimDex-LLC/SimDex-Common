@@ -112,19 +112,75 @@ class HTML
         $html = '';
 
         foreach ($options as $value => $label) {
+            $value = htmlspecialchars($value);
+
             if ($selected && $selected == $value) {
                 if ($default && $default == $value) {
-                    $html .= '<option class="option-selected option-default" value="' . htmlspecialchars($value) . '" selected>' . $label . '</option>' . PHP_EOL;
+                    $html .= '<option class="option-selected option-default" value="' . $value . '" selected>' . $label . '</option>' . PHP_EOL;
                 } else {
-                    $html .= '<option class="option-selected" value="' . htmlspecialchars($value) . '" selected>' . $label . '</option>' . PHP_EOL;
+                    $html .= '<option class="option-selected" value="' . $value . '" selected>' . $label . '</option>' . PHP_EOL;
                 }
             } else {
                 if ($default && $default == $value) {
-                    $html .= '<option class="option-default" value="' . htmlspecialchars($value) . '">' . $label . '</option>' . PHP_EOL;
+                    $html .= '<option class="option-default" value="' . $value . '">' . $label . '</option>' . PHP_EOL;
                 } else {
-                    $html .= '<option value="' . htmlspecialchars($value) . '">' . $label . '</option>' . PHP_EOL;
+                    $html .= '<option value="' . $value . '">' . $label . '</option>' . PHP_EOL;
                 }
             }
+        }
+
+        return $html;
+    }
+
+    public static function formCheckboxFields(array $checkboxes, ?array $default = [], ?array $checked = []): string
+    {
+        $html = '';
+
+        foreach ($checkboxes as $value => $label) {
+            $value = htmlspecialchars($value);
+
+            if ($checked && in_array($value, $checked)) {
+                if ($default && in_array($value, $default)) {
+                    $html .= '<input type="checkbox" class="checkbox-checked checkbox-default" name="' . $value . '" id="' . $value . '" value="' . $value . '" checked>' . PHP_EOL;
+                } else {
+                    $html .= '<input type="checkbox" class="checkbox-checked" name="' . $value . '" id="' . $value . '" value="' . $value . '" checked>' . PHP_EOL;
+                }
+            } else {
+                if ($default && in_array($value, $default)) {
+                    $html .= '<input type="checkbox" class="checkbox-default" name="' . $value . '" id="' . $value . '" value="' . $value . '">' . PHP_EOL;
+                } else {
+                    $html .= '<input type="checkbox" name="' . $value . '" id="' . $value . '" value="' . $value . '">' . PHP_EOL;
+                }
+            }
+
+            $html .= '<label for="' . $value . '">' . $label . '</label>' . PHP_EOL;
+        }
+
+        return $html;
+    }
+
+    public static function formRadioButtonFields(array $radio_buttons, ?string $name, ?string $default = '', ?string $checked = ''): string
+    {
+        $html = '';
+
+        foreach ($radio_buttons as $value => $label) {
+            $value = htmlspecialchars($value);
+
+            if ($checked && $checked == $value) {
+                if ($default && $default == $value) {
+                    $html .= '<input type="radio" class="radio-checked radio-default" name="' . $name . '" id="' . $value . '" value="' . $value . '" checked>' . PHP_EOL;
+                } else {
+                    $html .= '<input type="radio" class="radio-checked" name="' . $name . '" id="' . $value . '" value="' . $value . '" checked>' . PHP_EOL;
+                }
+            } else {
+                if ($default && $default == $value) {
+                    $html .= '<input type="radio" class="radio-default" name="' . $name . '" id="' . $value . '" value="' . $value . '">' . PHP_EOL;
+                } else {
+                    $html .= '<input type="radio" name="' . $name . '" id="' . $value . '" value="' . $value . '">' . PHP_EOL;
+                }
+            }
+
+            $html .= '<label for="' . $value . '">' . $label . '</label>' . PHP_EOL;
         }
 
         return $html;
