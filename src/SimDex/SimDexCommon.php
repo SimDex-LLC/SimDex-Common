@@ -1,8 +1,8 @@
 <?php
 
-namespace SimDex\SimDexCommon;
+namespace SimDex;
 
-class Common
+class SimDexCommon
 {
     public static function tableHeaderHTML(array $header_columns): string
     {
