@@ -1,0 +1,19 @@
+{
+  "name": "SimDex/SimDexCommon",
+  "description": "SimDex Common Class",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Geoff Myers",
+      "email": "geoff@simdex.org"
+    }
+  ],
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-4": {
+      "SimDex\\SimDexCommon\\": "src/"
+    }
+  },
+  "require": {}
+}
