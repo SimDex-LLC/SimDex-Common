@@ -2,7 +2,7 @@
 
 namespace SimDex;
 
-class SimDexCommon
+class Common
 {
     public static function startTimer()
     {
@@ -18,11 +18,11 @@ class SimDexCommon
         return $seconds;
     }
 
-    public static function tableHeaderHTML(array $headers): string
+    public static function tableHeaderHTML(array $headers, ?string $table_classes = '', ?string $thead_classes = ''): string
     {
         $html = '
-        <table>
-            <thead>
+        <table class="' . $table_classes . '">
+            <thead class="' . $thead_classes . '">
                 <tr>
         ';
 
@@ -53,11 +53,11 @@ class SimDexCommon
         return $html;
     }
 
-    public static function tableFooterHTML(array $headers): string
+    public static function tableFooterHTML(array $headers, ?string $tfoot_classes = ''): string
     {
         $html = '
         </tbody>
-        <tfoot>
+        <tfoot class="' . $tfoot_classes . '">
             <tr>
         ';
 
