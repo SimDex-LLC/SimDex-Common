@@ -85,7 +85,7 @@ class HTML
         return $html;
     }
 
-    function detailsTable(array $array, ?string $table_classes = ''): string
+    public static function detailsTable(array $array, ?string $table_classes = ''): string
     {
         $html = '
         <table class="' . htmlspecialchars($table_classes) . '">

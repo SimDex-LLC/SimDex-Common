@@ -6,22 +6,16 @@ class Geo
 {
     private static function loadCSV(string $file_name): array
     {
-        $file  = dirname(__FILE__, 3) . '/assets/' . $file_name;
+        $file_path = dirname(__FILE__, 3) . '/assets/' . $file_name . '.csv';
 
-        $csv = array_map('str_getcsv', file($file));
-
-        array_walk($csv, function (&$a) use ($csv) {
-            $a = array_combine($csv[0], $a);
-        });
-
-        array_shift($csv);
+        $csv = CSV::load($file_path);
 
         return $csv;
     }
 
     public static function getStates(): array
     {
-        $states = self::loadCSV('states.csv');
+        $states = self::loadCSV('states');
 
         return $states;
     }
@@ -50,7 +44,7 @@ class Geo
 
     public static function getCountries(): array
     {
-        $countries = self::loadCSV('countries.csv');
+        $countries = self::loadCSV('countries');
 
         return $countries;
     }
@@ -79,7 +73,7 @@ class Geo
 
     public static function getZIPCodes(): array
     {
-        $zip_codes = self::loadCSV('zip_codes.csv');
+        $zip_codes = self::loadCSV('zip_codes');
 
         return $zip_codes;
     }
@@ -119,13 +113,7 @@ class Geo
         $context = stream_context_create($context_options);
 
         if ($api == 'ipgeolocation') {
-            if (defined('SIMDEX_IPGEOLOCATION_API_KEY')) {
-                $api_key = SIMDEX_IPGEOLOCATION_API_KEY;
-            } else {
-                $api_key = 'b5469f65ca6d48ac9cea88d720d4e966';
-            }
-
-            $location_json = file_get_contents('https://api.ipgeolocation.io/ipgeo?apiKey=' . $api_key . '&ip=' . $ip_address, false, $context);
+            $location_json = file_get_contents('https://api.ipgeolocation.io/ipgeo?apiKey=' . SIMDEX_IPGEOLOCATION_API_KEY . '&ip=' . $ip_address, false, $context);
         } elseif ($api == 'ipapi') {
             $location_json = file_get_contents('https://ipapi.co/' . $ip_address . '/json/', false, $context);
         } else {
@@ -138,6 +126,24 @@ class Geo
             return $location_object->$field;
         } else {
             return $location_object;
+        }
+    }
+
+    public static function getDistance(float $lat1, float $lon1, float $lat2, float $lon2, ?string $unit = ''): float
+    {
+        $theta = $lon1 - $lon2;
+        $dist  = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+        $dist  = acos($dist);
+        $dist  = rad2deg($dist);
+        $miles = $dist * 60 * 1.1515;
+        $unit  = strtoupper($unit);
+
+        if ($unit == "K") {
+            return ($miles * 1.609344);
+        } else if ($unit == "N") {
+            return ($miles * 0.8684);
+        } else {
+            return $miles;
         }
     }
 }
