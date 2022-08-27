@@ -94,4 +94,50 @@ class Geo
 
         return $zip_code_numbers;
     }
+
+    public static function getUserIPAddress()
+    {
+        if (isset($SERVER['HTTP_X_REAL_IP'])) {
+            return $_SERVER['HTTP_X_REAL_IP'];
+        } elseif (isset($SERVER['HTTP_X_FORWARDED_FOR'])) {
+            return $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } elseif (isset($SERVER_['REMOTE_ADDR'])) {
+            return $_SERVER['REMOTE_ADDR'];
+        }
+    }
+
+    public static function getUserLocation(?string $field = '', ?string $api = 'ipgeolocation'): object|bool
+    {
+        $ip_address = self::getUserIPAddress();
+
+        $context_options = [
+            'http' => [
+                'user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
+            ]
+        ];
+
+        $context = stream_context_create($context_options);
+
+        if ($api == 'ipgeolocation') {
+            if (defined('SIMDEX_IPGEOLOCATION_API_KEY')) {
+                $api_key = SIMDEX_IPGEOLOCATION_API_KEY;
+            } else {
+                $api_key = 'b5469f65ca6d48ac9cea88d720d4e966';
+            }
+
+            $location_json = file_get_contents('https://api.ipgeolocation.io/ipgeo?apiKey=' . $api_key . '&ip=' . $ip_address, false, $context);
+        } elseif ($api == 'ipapi') {
+            $location_json = file_get_contents('https://ipapi.co/' . $ip_address . '/json/', false, $context);
+        } else {
+            return false;
+        }
+
+        $location_object = json_decode($location_json);
+
+        if ($field && isset($location_object->$field)) {
+            return $location_object->$field;
+        } else {
+            return $location_object;
+        }
+    }
 }

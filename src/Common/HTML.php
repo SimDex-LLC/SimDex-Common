@@ -32,13 +32,13 @@ class HTML
     public static function tableHeader(array $headers, ?string $table_classes = '', ?string $thead_classes = ''): string
     {
         $html = '
-        <table class="' . $table_classes . '">
-            <thead class="' . $thead_classes . '">
+        <table class="' . htmlspecialchars($table_classes) . '">
+            <thead class="' . htmlspecialchars($thead_classes) . '">
                 <tr>
         ';
 
         foreach ($headers as $class => $header) {
-            $html .= '<th class="' . $class . '">' . $header . '</th>';
+            $html .= '<th class="' . htmlspecialchars($class) . '">' . $header . '</th>';
         }
 
         $html .= '
@@ -56,7 +56,7 @@ class HTML
         $html = '<tr>';
 
         foreach ($values as $class => $value) {
-            $html .= '<td class="' . $class . '" data-value="' . htmlspecialchars($value) . '">' . $value . '</td>';
+            $html .= '<td class="' . htmlspecialchars($class) . '" data-value="' . htmlspecialchars($value) . '">' . $value . '</td>';
         }
 
         $html .= '</tr>';
@@ -68,12 +68,12 @@ class HTML
     {
         $html = '
         </tbody>
-        <tfoot class="' . $tfoot_classes . '">
+        <tfoot class="' . htmlspecialchars($tfoot_classes) . '">
             <tr>
         ';
 
         foreach ($headers as $class => $header) {
-            $html .= '<th class="' . $class . '">' . $header . '</th>';
+            $html .= '<th class="' . htmlspecialchars($class) . '">' . $header . '</th>';
         }
 
         $html .= '
@@ -85,17 +85,45 @@ class HTML
         return $html;
     }
 
+    function detailsTable(array $array, ?string $table_classes = ''): string
+    {
+        $html = '
+        <table class="' . htmlspecialchars($table_classes) . '">
+            <tbody>
+        ';
+
+        foreach ($array as $label => $value) {
+            if (!$value) {
+                continue;
+            }
+
+            $html .= '
+            <tr class="' . htmlspecialchars($label) . '">
+                <th class="label" data-value="' . htmlspecialchars($label) . '">' . $label . '</th>
+                <td class="value" data-value="' . htmlspecialchars($value) . '">' . $value . '</td>
+            </tr>
+            ';
+        }
+
+        $html .= '
+            </tbody>
+        </table>
+        ';
+
+        return $html;
+    }
+
     public static function list(array $values, ?string $list_type = 'ul', ?string $list_classes = ''): string
     {
 
         if ($list_type == 'ul') {
-            $html = '<ul class="' . $list_classes . '">';
+            $html = '<ul class="' . htmlspecialchars($list_classes) . '">';
         } elseif ($list_type == 'ol') {
-            $html = '<ol class="' . $list_classes . '">';
+            $html = '<ol class="' . htmlspecialchars($list_classes) . '">';
         }
 
         foreach ($values as $class => $value) {
-            $html .= '<li class="' . $class . '" data-value="' . htmlspecialchars($value) . '">' . $value . '</li>';
+            $html .= '<li class="' . htmlspecialchars($class) . '" data-value="' . htmlspecialchars($value) . '">' . $value . '</li>';
         }
 
         if ($list_type == 'ul') {
@@ -164,6 +192,7 @@ class HTML
         $html = '';
 
         foreach ($radio_buttons as $value => $label) {
+            $name  = htmlspecialchars($name);
             $value = htmlspecialchars($value);
 
             if ($checked && $checked == $value) {
