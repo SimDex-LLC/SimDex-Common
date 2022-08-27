@@ -149,14 +149,14 @@ class HTML
             if ($selected && $selected == $value) {
                 $html .= '<option class="option-selected" value="' . $value . '" selected>' . $label . '</option>' . PHP_EOL;
             } else {
-                $html .= '<option value="' . $value . '">' . $label . '</option>' . PHP_EOL
+                $html .= '<option value="' . $value . '">' . $label . '</option>' . PHP_EOL;
             }
         }
 
         return $html;
     }
 
-    public static function formCheckboxFields(array $checkboxes, ?array $default = [], ?array $checked = []): string
+    public static function formCheckboxFields(array $checkboxes, ?string $name, ?array $default = [], ?array $checked = []): string
     {
         $html = '';
 
@@ -168,12 +168,12 @@ class HTML
             $value = htmlspecialchars($value);
 
             if ($checked && in_array($value, $checked)) {
-                $html .= '<input type="checkbox" class="checkbox-checked" name="' . $value . '" id="' . $value . '" value="' . $value . '" checked>' . PHP_EOL;
+                $html .= '<input type="checkbox" class="checkbox-checked" name="' . $name . '" id="' . $value . '" value="' . $value . '" checked>' . PHP_EOL;
             } else {
-                $html .= '<input type="checkbox" name="' . $value . '" id="' . $value . '" value="' . $value . '">' . PHP_EOL;
+                $html .= '<input type="checkbox" name="' . $name . '" id="' . $value . '" value="' . $value . '">' . PHP_EOL;
             }
 
-            $html .= '<label for="' . $value . '">' . $label . '</label>' . PHP_EOL;
+            $html .= '<label for="' . $name . '">' . $label . '</label>' . PHP_EOL;
         }
 
         return $html;
@@ -197,7 +197,7 @@ class HTML
                 $html .= '<input type="radio" name="' . $name . '" id="' . $value . '" value="' . $value . '">' . PHP_EOL;
             }
 
-            $html .= '<label for="' . $value . '">' . $label . '</label>' . PHP_EOL;
+            $html .= '<label for="' . $name . '">' . $label . '</label>' . PHP_EOL;
         }
 
         return $html;
