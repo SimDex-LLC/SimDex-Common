@@ -142,18 +142,12 @@ class HTML
         foreach ($options as $value => $label) {
             $value = htmlspecialchars($value);
 
-            if ($selected && $selected == $value) {
-                if ($default && $default == $value) {
-                    $html .= '<option class="option-selected option-default" value="' . $value . '" selected>' . $label . '</option>' . PHP_EOL;
-                } else {
-                    $html .= '<option class="option-selected" value="' . $value . '" selected>' . $label . '</option>' . PHP_EOL;
-                }
+            if ($selected && $value == $selected) {
+                $html .= '<option class="option-selected" value="' . $value . '" selected>' . $label . '</option>' . PHP_EOL;
+            } elseif (!$selected && $value == $default) {
+                $html .= '<option class="option-default-selected" value="' . $value . '" selected>' . $label . '</option>' . PHP_EOL;
             } else {
-                if ($default && $default == $value) {
-                    $html .= '<option class="option-default" value="' . $value . '">' . $label . '</option>' . PHP_EOL;
-                } else {
-                    $html .= '<option value="' . $value . '">' . $label . '</option>' . PHP_EOL;
-                }
+                $html .= '<option value="' . $value . '">' . $label . '</option>' . PHP_EOL;
             }
         }
 
