@@ -139,15 +139,17 @@ class HTML
     {
         $html = '';
 
+        if (!$selected) {
+            $selected = $default;
+        }
+
         foreach ($options as $value => $label) {
             $value = htmlspecialchars($value);
 
-            if ($selected && $value == $selected) {
+            if ($selected && $selected == $value) {
                 $html .= '<option class="option-selected" value="' . $value . '" selected>' . $label . '</option>' . PHP_EOL;
-            } elseif (!$selected && $value == $default) {
-                $html .= '<option class="option-default-selected" value="' . $value . '" selected>' . $label . '</option>' . PHP_EOL;
             } else {
-                $html .= '<option value="' . $value . '">' . $label . '</option>' . PHP_EOL;
+                $html .= '<option value="' . $value . '">' . $label . '</option>' . PHP_EOL
             }
         }
 
@@ -158,21 +160,17 @@ class HTML
     {
         $html = '';
 
+        if (!$checked) {
+            $checked = $default;
+        }
+
         foreach ($checkboxes as $value => $label) {
             $value = htmlspecialchars($value);
 
             if ($checked && in_array($value, $checked)) {
-                if ($default && in_array($value, $default)) {
-                    $html .= '<input type="checkbox" class="checkbox-checked checkbox-default" name="' . $value . '" id="' . $value . '" value="' . $value . '" checked>' . PHP_EOL;
-                } else {
-                    $html .= '<input type="checkbox" class="checkbox-checked" name="' . $value . '" id="' . $value . '" value="' . $value . '" checked>' . PHP_EOL;
-                }
+                $html .= '<input type="checkbox" class="checkbox-checked" name="' . $value . '" id="' . $value . '" value="' . $value . '" checked>' . PHP_EOL;
             } else {
-                if ($default && in_array($value, $default)) {
-                    $html .= '<input type="checkbox" class="checkbox-default" name="' . $value . '" id="' . $value . '" value="' . $value . '">' . PHP_EOL;
-                } else {
-                    $html .= '<input type="checkbox" name="' . $value . '" id="' . $value . '" value="' . $value . '">' . PHP_EOL;
-                }
+                $html .= '<input type="checkbox" name="' . $value . '" id="' . $value . '" value="' . $value . '">' . PHP_EOL;
             }
 
             $html .= '<label for="' . $value . '">' . $label . '</label>' . PHP_EOL;
@@ -185,22 +183,18 @@ class HTML
     {
         $html = '';
 
+        if (!$checked) {
+            $checked = $default;
+        }
+
         foreach ($radio_buttons as $value => $label) {
             $name  = htmlspecialchars($name);
             $value = htmlspecialchars($value);
 
             if ($checked && $checked == $value) {
-                if ($default && $default == $value) {
-                    $html .= '<input type="radio" class="radio-checked radio-default" name="' . $name . '" id="' . $value . '" value="' . $value . '" checked>' . PHP_EOL;
-                } else {
-                    $html .= '<input type="radio" class="radio-checked" name="' . $name . '" id="' . $value . '" value="' . $value . '" checked>' . PHP_EOL;
-                }
+                $html .= '<input type="radio" class="radio-checked" name="' . $name . '" id="' . $value . '" value="' . $value . '" checked>' . PHP_EOL;
             } else {
-                if ($default && $default == $value) {
-                    $html .= '<input type="radio" class="radio-default" name="' . $name . '" id="' . $value . '" value="' . $value . '">' . PHP_EOL;
-                } else {
-                    $html .= '<input type="radio" name="' . $name . '" id="' . $value . '" value="' . $value . '">' . PHP_EOL;
-                }
+                $html .= '<input type="radio" name="' . $name . '" id="' . $value . '" value="' . $value . '">' . PHP_EOL;
             }
 
             $html .= '<label for="' . $value . '">' . $label . '</label>' . PHP_EOL;
