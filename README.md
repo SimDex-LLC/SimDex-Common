@@ -22,6 +22,7 @@ Requirements:
 - [squizlabs/php_codesniffer](https://packagist.org/packages/squizlabs/php_codesniffer): ^3.7
 
 Links:
+- Documentation: https://simdex-llc.github.io/SimDex-Common/
 - GitHub: https://github.com/SimDex-LLC/SimDex-Common
 - Packagist: https://packagist.org/packages/simdex/simdex-common
 
