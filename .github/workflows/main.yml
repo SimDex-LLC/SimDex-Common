@@ -1,4 +1,4 @@
-name: php
+name: main
 on: [push, pull_request]
 jobs:
   build:
