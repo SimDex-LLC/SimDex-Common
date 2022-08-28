@@ -1,4 +1,4 @@
-name: PHP Composer
+name: PHP
 
 on:
   push:
@@ -42,7 +42,10 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.1'
-        tools: cs2pr, phpcs
+        tools: cs2pr, phpcs, php-cs-fixer
 
     - name: Run phpcs
       run: phpcs -q --report=checkstyle src | cs2pr
+    
+    - name: Run php-cs-fixer
+      run: php-cs-fixer fix --dry-run --format=checkstyle | cs2pr
