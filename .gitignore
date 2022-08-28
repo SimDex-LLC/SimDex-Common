@@ -1,5 +1,6 @@
 /.php-cs-fixer.cache
 /.phpcs
+/.phpdoc
 /composer.lock
 /test.php
 /vendor
