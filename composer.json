@@ -1,6 +1,6 @@
 {
   "name": "simdex/simdex-common",
-  "description": "SimDex Common Class",
+  "description": "SimDex Common",
   "type": "library",
   "license": "GPL-3.0-or-later",
   "authors": [
