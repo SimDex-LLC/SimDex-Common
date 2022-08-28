@@ -17,7 +17,7 @@ Classes:
 - WordPress
 
 Requirements:
-- php: >=8.1
+- [php](https://www.php.net/): >=7.4
 - [friendsofphp/php-cs-fixer](https://packagist.org/packages/friendsofphp/php-cs-fixer): ^3.10
 - [squizlabs/php_codesniffer](https://packagist.org/packages/squizlabs/php_codesniffer): ^3.7
 
