@@ -52,7 +52,6 @@ class HTML
 
     public static function tableRow(array $values): string
     {
-
         $html = '<tr>';
 
         foreach ($values as $class => $value) {
@@ -115,7 +114,6 @@ class HTML
 
     public static function list(array $values, ?string $list_type = 'ul', ?string $list_classes = ''): string
     {
-
         if ($list_type == 'ul') {
             $html = '<ul class="' . htmlspecialchars($list_classes) . '">';
         } elseif ($list_type == 'ol') {

@@ -63,7 +63,7 @@ class General
 
         return $modified_date_time;
     }
-    
+
 
     public static function debug(): string
     {

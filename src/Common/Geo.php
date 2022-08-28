@@ -140,7 +140,7 @@ class Geo
 
         if ($unit == "K") {
             return ($miles * 1.609344);
-        } else if ($unit == "N") {
+        } elseif ($unit == "N") {
             return ($miles * 0.8684);
         } else {
             return $miles;
