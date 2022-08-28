@@ -23,7 +23,12 @@ namespace SimDex\Common;
  */
 class WordPress
 {
-    public static function debug()
+    /**
+     * Generate WordPress debug HTML output
+     *
+     * @return string WordPress debug HTML
+     */
+    public static function debug(): string
     {
         if (isset($_REQUEST['debug']) && $_REQUEST['debug']) {
             $start_time = General::startTimer();
@@ -233,7 +238,7 @@ class WordPress
             </div><!-- End .simdex-debug -->
             ';
 
-            echo $html;
+            return $html;
         }
     }
 }

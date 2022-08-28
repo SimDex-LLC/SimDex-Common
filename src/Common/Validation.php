@@ -23,52 +23,63 @@ namespace SimDex\Common;
  */
 class Validation
 {
+    /**
+     * Validate email address
+     *
+     * @param mixed $value Email address to validate
+     *
+     * @return string|bool Valid email address or false if invalid
+     */
     public static function validateEmail(string $value): string|bool
     {
         return filter_var($value, FILTER_VALIDATE_EMAIL);
     }
 
-    public static function validatePhone(string $value): string|bool
-    {
-    }
-
+    /**
+     * Validate domain name
+     *
+     * @param string $value Domain name to validate
+     *
+     * @return string|bool Valid domain name or false if invalid
+     */
     public static function validateDomain(string $value): string|bool
     {
         return filter_var($value, FILTER_VALIDATE_DOMAIN);
     }
 
+    /**
+     * Validate IP address (IPv4 or IPv6)
+     *
+     * @param mixed $value IP address to validate (IPv4 or IPv6)
+     *
+     * @return string Valid IP address or false if invalid
+     */
     public static function validateIP(string $value): string|bool
     {
         return filter_var($value, FILTER_VALIDATE_IP);
     }
 
+    /**
+     * Validate IPv4 address
+     *
+     * @param mixed $value IPv4 address to validate
+     *
+     * @return string|bool Valid IPv4 address or false if invalid
+     */
     public static function validateIPv4(string $value): string|bool
     {
         return filter_var($value, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
     }
 
+    /**
+     * Validate URL
+     *
+     * @param mixed $value URL to validate
+     *
+     * @return string|bool Valid URL or false if invalid
+     */
     public static function validateURL(string $value): string|bool
     {
-        return filter_var($value, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED, FILTER_FLAG_HOST_REQUIRED);
-    }
-
-    public static function validateAddress(string $value): string|bool
-    {
-    }
-
-    public static function validateCity(string $value): string|bool
-    {
-    }
-
-    public static function validateState(string $value): string|bool
-    {
-    }
-
-    public static function validateZIP(string $value): string|bool
-    {
-    }
-
-    public static function validateCountry(string $value): string|bool
-    {
+        return filter_var($value, FILTER_VALIDATE_URL);
     }
 }
