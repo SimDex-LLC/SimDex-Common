@@ -3,6 +3,7 @@
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/SimDex-LLC/SimDex-Common/php)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/SimDex-LLC/SimDex-Common)
 ![GitHub](https://img.shields.io/github/license/SimDex-LLC/SimDex-Common)
+![Packagist PHP Version Support (specify version)](https://img.shields.io/packagist/php-v/simdex/simdex-common/dev-master)
 
 Description:
 - Library of PHP classes containing functions commonly used in SimDex projects
@@ -14,6 +15,11 @@ Classes:
 - HTML
 - Validation
 - WordPress
+
+Requirements:
+- php: >=8.1
+- [friendsofphp/php-cs-fixer](https://packagist.org/packages/friendsofphp/php-cs-fixer): ^3.10
+- [squizlabs/php_codesniffer](https://packagist.org/packages/squizlabs/php_codesniffer): ^3.7
 
 Links:
 - GitHub: https://github.com/SimDex-LLC/SimDex-Common
