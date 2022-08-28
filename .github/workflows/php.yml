@@ -36,3 +36,7 @@ jobs:
         run: phpdoc run -d src -t docs
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
+      - name: Publish Documentation
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: docs
