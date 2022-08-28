@@ -1,10 +1,36 @@
 <?php
+/**
+ * SimDex Common
+ * PHP Version 8.1
+ *
+ * @category Common
+ * @package  SimDex\Commnon
+ * @author   Geoff Myers <geoff@simdex.org>
+ * @license  https://www.gnu.org/licenses/gpl-3.0.html GNU GPL 3.0
+ * @link     https://github.com/SimDex-LLC/SimDex-Common
+ */
 
 namespace SimDex\Common;
 
+/**
+ * Geo Class
+ *
+ * @category Geo
+ * @package  SimDex\Commnon
+ * @author   Geoff Myers <geoff@simdex.org>
+ * @license  https://www.gnu.org/licenses/gpl-3.0.html GNU GPL 3.0
+ * @link     https://github.com/SimDex-LLC/SimDex-Common
+ */
 class Geo
 {
-    private static function loadCSV(string $file_name): array
+    /**
+     * Load CSV file
+     *
+     * @param mixed $file_name CSV file name without ".csv"
+     *
+     * @return array Array of CSV file contents
+     */
+    private static function _loadCSV(string $file_name): array
     {
         $file_path = dirname(__FILE__, 3) . '/assets/' . $file_name . '.csv';
 
@@ -13,13 +39,23 @@ class Geo
         return $csv;
     }
 
+    /**
+     * Get all U.S. states
+     *
+     * @return array Array of all U.S. states
+     */
     public static function getStates(): array
     {
-        $states = self::loadCSV('states');
+        $states = self::_loadCSV('states');
 
         return $states;
     }
 
+    /**
+     * Get names of all U.S. states
+     *
+     * @return array Array of all U.S. state names
+     */
     public static function getStateNames(): array
     {
         $states = self::getStates();
@@ -31,6 +67,11 @@ class Geo
         return $state_names;
     }
 
+    /**
+     * Get abbreviations of all U.S. states
+     *
+     * @return array Array of all U.S. state abbreviations
+     */
     public static function getStateAbbreviations(): array
     {
         $states = self::getStates();
@@ -42,13 +83,23 @@ class Geo
         return $state_abbreviations;
     }
 
+    /**
+     * Get allc ountries
+     *
+     * @return array Array of all countries
+     */
     public static function getCountries(): array
     {
-        $countries = self::loadCSV('countries');
+        $countries = self::_loadCSV('countries');
 
         return $countries;
     }
 
+    /**
+     * Get all country names
+     *
+     * @return array Array of all country names
+     */
     public static function getCountryNames(): array
     {
         $countries = self::getCountries();
@@ -60,6 +111,11 @@ class Geo
         return $country_names;
     }
 
+    /**
+     * Get all country abbreviations
+     *
+     * @return array Array of all country abbreviations
+     */
     public static function getCountryAbbreviations(): array
     {
         $countries = self::getCountries();
@@ -71,13 +127,23 @@ class Geo
         return $country_abbreviations;
     }
 
+    /**
+     * Get all U.S. ZIP codes
+     *
+     * @return array Array of all U.S. ZIP codes
+     */
     public static function getZIPCodes(): array
     {
-        $zip_codes = self::loadCSV('zip_codes');
+        $zip_codes = self::_loadCSV('zip_codes');
 
         return $zip_codes;
     }
 
+    /**
+     * Get numbers of all U.S. ZIP codes
+     *
+     * @return array Array of all U.S. ZIP code numbers
+     */
     public static function getZIPCodeNumbers(): array
     {
         $zip_codes = self::getZIPCodes();
@@ -89,7 +155,12 @@ class Geo
         return $zip_code_numbers;
     }
 
-    public static function getUserIPAddress()
+    /**
+     * Get user's IP address
+     *
+     * @return string|bool User's IP address (IPv4 or IPv6)
+     */
+    public static function getUserIPAddress(): string|bool
     {
         if (isset($SERVER['HTTP_X_REAL_IP'])) {
             return $_SERVER['HTTP_X_REAL_IP'];
@@ -97,10 +168,20 @@ class Geo
             return $_SERVER['HTTP_X_FORWARDED_FOR'];
         } elseif (isset($SERVER_['REMOTE_ADDR'])) {
             return $_SERVER['REMOTE_ADDR'];
+        } else {
+            return false;
         }
     }
 
-    public static function getUserLocation(?string $field = '', ?string $api = 'ipgeolocation'): object|bool
+    /**
+     * Get user's geographic location
+     *
+     * @param string|null $field Name of field to return
+     * @param string|null $api   Name of API to use (ipgeolocation or ipapi)
+     *
+     * @return string|object|bool User's geographic location
+     */
+    public static function getUserLocation(?string $field = '', ?string $api = 'ipgeolocation'): string|object|bool
     {
         $ip_address = self::getUserIPAddress();
 
@@ -129,6 +210,17 @@ class Geo
         }
     }
 
+    /**
+     * Get distance between two geographic coordintes (latitude and longitude)
+     *
+     * @param float       $lat1 Latitude of first location
+     * @param float       $lon1 Longitude of first location
+     * @param float       $lat2 Latitude of second location
+     * @param float       $lon2 Longitude of second location
+     * @param string|null $unit Measurement unit (default: miles)
+     *
+     * @return float
+     */
     public static function getDistance(float $lat1, float $lon1, float $lat2, float $lon2, ?string $unit = ''): float
     {
         $theta = $lon1 - $lon2;

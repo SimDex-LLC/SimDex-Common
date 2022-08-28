@@ -1,9 +1,35 @@
 <?php
+/**
+ * SimDex Common
+ * PHP Version 8.1
+ *
+ * @category Common
+ * @package  SimDex\Commnon
+ * @author   Geoff Myers <geoff@simdex.org>
+ * @license  https://www.gnu.org/licenses/gpl-3.0.html GNU GPL 3.0
+ * @link     https://github.com/SimDex-LLC/SimDex-Common
+ */
 
 namespace SimDex\Common;
 
+/**
+ * General Class
+ *
+ * @category General
+ * @package  SimDex\Commnon
+ * @author   Geoff Myers <geoff@simdex.org>
+ * @license  https://www.gnu.org/licenses/gpl-3.0.html GNU GPL 3.0
+ * @link     https://github.com/SimDex-LLC/SimDex-Common
+ */
 class General
 {
+    /**
+     * Boolean to True/False string
+     *
+     * @param mixed $boolean Boolean value
+     *
+     * @return string String value: "True" or "False"
+     */
     public static function boolToString(bool $boolean): string
     {
         if ($boolean) {
@@ -13,6 +39,13 @@ class General
         }
     }
 
+    /**
+     * Boolean to Yes/No string
+     *
+     * @param mixed $boolean Boolean value
+     *
+     * @return string String value: "Yes" or "No"
+     */
     public static function boolToStringYesNo(bool $boolean): string
     {
         if ($boolean) {
@@ -22,12 +55,24 @@ class General
         }
     }
 
-    public static function startTimer()
+    /**
+     * Start timer
+     *
+     * @return int|float Start time in nanoseconds
+     */
+    public static function startTimer(): int|float
     {
         return hrtime(true);
     }
 
-    public static function stopTimer($start_time)
+    /**
+     * Stop timer
+     *
+     * @param mixed $start_time Start time in nanoseconds
+     *
+     * @return int|float Timer duration in seconds
+     */
+    public static function stopTimer($start_time): int|float
     {
         $stop_time = hrtime(true);
         $duration  = ($stop_time - $start_time);
@@ -36,7 +81,12 @@ class General
         return $seconds;
     }
 
-    public static function getFullURL()
+    /**
+     * Get full URL
+     *
+     * @return string Full URL
+     */
+    public static function getFullURL(): string
     {
         if ($_SERVER['HTTPS'] && $_SERVER['HTTPS']) {
             $protocol = 'https';
@@ -49,6 +99,11 @@ class General
         return $url;
     }
 
+    /**
+     * Get full URL without query string
+     *
+     * @return string Full URL without query string
+     */
     public static function getFullURLNoQueryString(): string
     {
         $url = strtok($_SERVER['REQUEST_URI'], '?');
@@ -56,7 +111,14 @@ class General
         return $url;
     }
 
-    public static function getPluginFileVersion(string $file_path): string
+    /**
+     * Get file last modified date/time string
+     *
+     * @param string $file_path Path to file
+     *
+     * @return string File last modified date/time
+     */
+    public static function getFileDateTime(string $file_path): string
     {
         $modified_timestamp = filemtime($file_path);
         $modified_date_time = date('Y-m-d-H-i-s', $modified_timestamp);
@@ -65,6 +127,11 @@ class General
     }
 
 
+    /**
+     * Generate PHP debug HTML output
+     *
+     * @return string PHP debug HTML
+     */
     public static function debug(): string
     {
         $start_time = self::startTimer();
