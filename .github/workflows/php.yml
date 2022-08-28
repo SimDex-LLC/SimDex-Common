@@ -1,0 +1,34 @@
+name: php
+on: [push, pull_request]
+jobs:
+  build:
+    name: PHP ${{ matrix.php-versions }} on ${{ matrix.operating-system }}
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      fail-fast: false
+      matrix:
+        operating-system: [ubuntu-latest]
+        php-versions: ["7.4", "8.0", "8.1"]
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v3
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          tools: cs2pr, phpcs, php-cs-fixer
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - name: Cache Composer Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-
+      - name: Install Composer Dependencies
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
+      - name: Run PHP CodeSniffer
+        run: phpcs -q --report=checkstyle src | cs2pr
+      - name: Run PHP Code Standards Fixer
+        run: php-cs-fixer fix --dry-run --format=checkstyle src | cs2pr
