@@ -31,6 +31,8 @@ jobs:
       - name: Run PHP CodeSniffer
         run: phpcs -n --report=checkstyle src | cs2pr
       - name: Run PHP Code Standards Fixer
-        run: php-cs-fixer fix --dry-run --format=checkstyle src | cs2pr
+        run: php-cs-fixer fix --format=checkstyle src | cs2pr
       - name: Generate Documentation
         run: phpdoc run -d src -t docs
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
