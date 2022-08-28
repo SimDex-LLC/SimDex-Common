@@ -1,4 +1,5 @@
-test.php
-vendor
 /.php-cs-fixer.cache
+/.phpcs
 /composer.lock
+/test.php
+/vendor
