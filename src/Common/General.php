@@ -100,11 +100,21 @@ class General
     }
 
     /**
-     * Get full URL without query string
+     * Get full URL without query string (alias function)
      *
      * @return string Full URL without query string
      */
     public static function getFullURLNoQueryString(): string
+    {
+        return self::getFullURLWithoutQueryString();
+    }
+
+    /**
+     * Get full URL without query string
+     *
+     * @return string Full URL without query string
+     */
+    public static function getFullURLWithoutQueryString(): string
     {
         $url = strtok($_SERVER['REQUEST_URI'], '?');
 
@@ -125,7 +135,6 @@ class General
 
         return $modified_date_time;
     }
-
 
     /**
      * Generate PHP debug HTML output
@@ -224,5 +233,62 @@ class General
         ';
 
         return $html;
+    }
+
+    public static function flattenAlt1(array $array)
+    {
+        $array_flat = [];
+
+        array_walk_recursive($array, function ($a, $b) use (&$array_flat) {
+            $array_flat[$b] = $a;
+        });
+
+        return $array_flat;
+    }
+
+    public static function flattenAlt2(array $array)
+    {
+        $array_flat = [];
+
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $array_flat = array_merge($array_flat, self::{__FUNCTION__}($value));
+            } else {
+                $array_flat = array_merge($array_flat, [$key => $value]);
+            }
+        }
+        return $array_flat;
+    }
+
+    public static function flatten(array|object $array, ?string $separator = '.', ?string $prefix = '')
+    {
+        $array_flat = [];
+
+        if (!is_array($array)) {
+            $array = (array) $array;
+        }
+
+        foreach ($array as $key => $value) {
+            $_key = ltrim($prefix . $separator . $key, $separator);
+
+            if (is_array($value) || is_object($value)) {
+                $array_flat = array_merge($array_flat, self::{__FUNCTION__}($value, $separator, $_key));
+            } else {
+                $array_flat[$_key] = $value;
+            }
+        }
+
+        return $array_flat;
+    }
+
+    public static function flattenChildren(array $array, ?string $separator = '.', ?string $prefix = '')
+    {
+        $array_flat = [];
+
+        foreach ($array as $key => $value) {
+            $array_flat[$key] = self::flatten($value, $separator, $prefix);
+        }
+
+        return $array_flat;
     }
 }

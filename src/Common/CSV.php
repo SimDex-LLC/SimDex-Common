@@ -45,4 +45,37 @@ class CSV
 
         return $csv;
     }
+
+    public static function toCSV(array $array_values, ?array $array_keys = [], ?string $delimiter = ',')
+    {
+        $csv = '';
+
+        if (!$array_keys) {
+            $first_row = reset($array_values);
+
+            if (is_array($first_row) || is_object($first_row)) {
+                $first_row = (array) $first_row;
+
+                $array_keys = array_keys($first_row);
+            }
+        }
+
+        if ($array_keys) {
+            foreach ($array_keys as $key) {
+                $csv .= $key . $delimiter;
+            }
+
+            $csv = substr($csv, 0, strlen($csv) - 1) . "\n";
+        }
+
+        foreach ($array_values as $row_key => $row) {
+            foreach ($row as $column_key => $column) {
+                $csv .= $column . $delimiter;
+            }
+
+            $csv = substr($csv, 0, strlen($csv) - 1) . "\n";
+        }
+
+        return $csv;
+    }
 }
